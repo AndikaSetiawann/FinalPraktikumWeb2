@@ -2,17 +2,17 @@
 
 | Atribut         | Keterangan            |
 | --------------- | --------------------- |
-| *Nama*        | Andika Setiawan       |
-| *NIM*         | 312310470             |
-| *Kelas*       | TI.23.A.5             |
-| *Mata Kuliah* | Pemrograman Website 2 |
+| **Nama**        | Andika Setiawan       |
+| **NIM**         | 312310470             |
+| **Kelas**       | TI.23.A.5             |
+| **Mata Kuliah** | Pemrograman Website 2 |
 
 ## 🌐 Link Aplikasi Live
 
 | Aplikasi            | URL                                                                      | Deskripsi                                 |
-| ------------------- | ------------------------------------------------------------------------ | ----------------------------------------- |
-| *Web Artikel CI4* | [https://setiawanarticle.my.id/](https://setiawanarticle.my.id/)         | Aplikasi web artikel dengan CodeIgniter 4 |
-| *VueJS Frontend*  | [https://setiawanarticle.my.id/vue/](https://setiawanarticle.my.id/vue/) | Frontend VueJS untuk konsumsi REST API    |
+| ------------------- | -------------------------------------------------------------------------| ----------------------------------------- |
+| **Web Artikel CI4** | [https://setiawanarticle.my.id/](https://setiawanarticle.my.id/)         | Aplikasi web artikel dengan CodeIgniter 4 |
+| **VueJS Frontend**  | [https://setiawanarticle.my.id/vue/](https://setiawanarticle.my.id/vue/) | Frontend VueJS untuk konsumsi REST API    |
 
 ## 🔗 Daftar Isi
 
@@ -43,53 +43,53 @@ Praktikum ini merupakan kelanjutan dari praktikum sebelumnya yang berfokus pada 
 
 ### 1. Persiapan Database
 
-Memastikan MySQL Server berjalan dan membuka database lab_ci4.
+Memastikan MySQL Server berjalan dan membuka database `lab_ci4`.
 
 ### 2. Membuat Tabel Kategori
 
-Membuat tabel baru bernama kategori dengan struktur:
+Membuat tabel baru bernama `kategori` dengan struktur:
 
-- id_kategori (INT, PRIMARY KEY, AUTO_INCREMENT)
-- nama_kategori (VARCHAR 100)
-- slug_kategori (VARCHAR 100)
+- `id_kategori` (INT, PRIMARY KEY, AUTO_INCREMENT)
+- `nama_kategori` (VARCHAR 100)
+- `slug_kategori` (VARCHAR 100)
 
-*Query SQL:*
+**Query SQL:**
 
-sql
+```sql
 CREATE TABLE kategori (
     id_kategori INT(11) AUTO_INCREMENT,
     nama_kategori VARCHAR(100) NOT NULL,
     slug_kategori VARCHAR(100),
     PRIMARY KEY (id_kategori)
 );
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image.png)
 
 ### 3. Modifikasi Tabel Artikel
 
-Menambahkan foreign key id_kategori pada tabel artikel untuk membuat relasi dengan tabel kategori.
+Menambahkan foreign key `id_kategori` pada tabel `artikel` untuk membuat relasi dengan tabel `kategori`.
 
-*Query SQL:*
+**Query SQL:**
 
-sql
+```sql
 ALTER TABLE artikel
 ADD COLUMN id_kategori INT(11),
 ADD CONSTRAINT fk_kategori_artikel
 FOREIGN KEY (id_kategori) REFERENCES kategori(id_kategori);
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-1.png)
 
 ### 4. Membuat Model Kategori
 
-Membuat file KategoriModel.php di folder app/Models/ untuk mengelola data kategori.
+Membuat file `KategoriModel.php` di folder `app/Models/` untuk mengelola data kategori.
 
-*Kode KategoriModel.php:*
+**Kode KategoriModel.php:**
 
-php
+```php
 <?php
 namespace App\Models;
 use CodeIgniter\Model;
@@ -101,18 +101,18 @@ class KategoriModel extends Model
     protected $useAutoIncrement = true;
     protected $allowedFields = ['nama_kategori', 'slug_kategori'];
 }
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-2.png)
 
 ### 5. Modifikasi Model Artikel
 
-Memodifikasi ArtikelModel.php dengan menambahkan method getArtikelDenganKategori() untuk melakukan join dengan tabel kategori.
+Memodifikasi `ArtikelModel.php` dengan menambahkan method `getArtikelDenganKategori()` untuk melakukan join dengan tabel kategori.
 
-*Kode ArtikelModel.php:*
+**Kode ArtikelModel.php:**
 
-php
+```php
 <?php
 namespace App\Models;
 use CodeIgniter\Model;
@@ -133,22 +133,22 @@ class ArtikelModel extends Model
             ->getResultArray();
     }
 }
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-3.png)
 
 ### 6. Modifikasi Controller Artikel
 
-Memperbarui Artikel.php controller untuk:
+Memperbarui `Artikel.php` controller untuk:
 
 - Menggunakan method join dari model
 - Menambahkan filter berdasarkan kategori
 - Menangani kategori pada form tambah dan edit artikel
 
-*Kode Controller Artikel.php:*
+**Kode Controller Artikel.php:**
 
-php
+```php
 <?php
 namespace App\Controllers;
 use App\Models\ArtikelModel;
@@ -270,9 +270,9 @@ class Artikel extends BaseController
         return view('artikel/detail', $data);
     }
 }
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-4.png)
 
 ### 7. Modifikasi View
@@ -281,9 +281,9 @@ class Artikel extends BaseController
 
 Menampilkan daftar artikel dengan nama kategorinya.
 
-*Kode index.php:*
+**Kode index.php:**
 
-php
+```php
 <?= $this->include('template/header'); ?>
 <?php if ($artikel): foreach ($artikel as $row): ?>
 <article class="entry">
@@ -299,7 +299,7 @@ php
 </article>
 <?php endif; ?>
 <?= $this->include('template/footer'); ?>
-
+```
 
 #### b. admin_index.php (Halaman Admin)
 
@@ -309,9 +309,9 @@ Menambahkan:
 - Kolom kategori pada tabel
 - Dropdown untuk memfilter artikel
 
-*Kode admin_index.php:*
+**Kode admin_index.php:**
 
-php
+```php
 <?= $this->include('template/admin_header'); ?>
 <h2><?= $title; ?></h2>
 <div class="row mb-3">
@@ -364,18 +364,18 @@ php
 </table>
 <?= $pager->only(['q', 'kategori_id'])->links(); ?>
 <?= $this->include('template/admin_footer'); ?>
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-5.png)
 
 #### c. form_add.php (Form Tambah Artikel)
 
 Menambahkan dropdown untuk memilih kategori saat menambah artikel baru.
 
-*Kode form_add.php:*
+**Kode form_add.php:**
 
-php
+```php
 <?= $this->include('template/admin_header'); ?>
 <h2><?= $title; ?></h2>
 <form action="" method="post">
@@ -398,18 +398,18 @@ php
     <p><input type="submit" value="Kirim" class="btn btn-large"></p>
 </form>
 <?= $this->include('template/admin_footer'); ?>
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-6.png)
 
 #### d. form_edit.php (Form Edit Artikel)
 
 Menambahkan dropdown kategori dengan nilai yang sudah terpilih sesuai data artikel.
 
-*Kode form_edit.php:*
+**Kode form_edit.php:**
 
-php
+```php
 <?= $this->include('template/admin_header'); ?>
 <h2><?= $title; ?></h2>
 <form action="" method="post">
@@ -432,32 +432,32 @@ php
     <p><input type="submit" value="Kirim" class="btn btn-large"></p>
 </form>
 <?= $this->include('template/admin_footer'); ?>
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-7.png)
 
 ### 8. Testing Fungsionalitas
 
 #### a. Menampilkan Artikel dengan Kategori
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-8.png)
 
 #### b. Menambah Artikel dengan Kategori
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-10.png)
 ![alt text](Gambar/image-11.png)
 
 #### c. Filter Artikel Berdasarkan Kategori
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-9.png)
 
 #### d. Edit Artikel dan Mengubah Kategori
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-12.png)
 ![alt text](Gambar/image-13.png)
 
@@ -467,47 +467,47 @@ php
 
 Memodifikasi tampilan detail artikel untuk menampilkan nama kategori.
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-14.png)
 
 ### 2. Daftar Kategori di Halaman Depan (Opsional)
 
 Menambahkan fitur untuk menampilkan daftar kategori di halaman depan.
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-15.png)
 
 ### 3. Artikel Berdasarkan Kategori (Opsional)
 
 Membuat fungsi untuk menampilkan artikel berdasarkan kategori tertentu.
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-16.png)
 
 ## Konsep yang Dipelajari
 
 ### 1. Relasi Database
 
-- *One-to-Many Relationship*: Satu kategori dapat memiliki banyak artikel
-- *Foreign Key*: Menghubungkan tabel artikel dengan tabel kategori
-- *Join Query*: Menggabungkan data dari dua tabel atau lebih
+- **One-to-Many Relationship**: Satu kategori dapat memiliki banyak artikel
+- **Foreign Key**: Menghubungkan tabel artikel dengan tabel kategori
+- **Join Query**: Menggabungkan data dari dua tabel atau lebih
 
 ### 2. Query Builder CodeIgniter 4
 
-- *Select dengan Join*: Mengambil data dari multiple tabel
-- *Where Clause*: Memfilter data berdasarkan kondisi tertentu
-- *Like Query*: Pencarian berdasarkan pattern matching
-- *Pagination*: Membagi data menjadi beberapa halaman
+- **Select dengan Join**: Mengambil data dari multiple tabel
+- **Where Clause**: Memfilter data berdasarkan kondisi tertentu
+- **Like Query**: Pencarian berdasarkan pattern matching
+- **Pagination**: Membagi data menjadi beberapa halaman
 
 ### 3. MVC Pattern
 
-- *Model*: Mengelola interaksi dengan database
-- *View*: Menampilkan data kepada user
-- *Controller*: Mengatur alur logika aplikasi
+- **Model**: Mengelola interaksi dengan database
+- **View**: Menampilkan data kepada user
+- **Controller**: Mengatur alur logika aplikasi
 
 ## Struktur File
 
-
+```
 app/
 ├── Controllers/
 │   └── Artikel.php
@@ -521,7 +521,7 @@ app/
         ├── form_add.php
         ├── form_edit.php
         └── detail.php
-
+```
 
 ## Kesimpulan
 
@@ -551,15 +551,15 @@ Praktikum ini bertujuan untuk mengimplementasikan AJAX pada aplikasi web menggun
 
 ### 1. Persiapan
 
-- Memastikan jQuery sudah diunduh dan disimpan di folder public/assets/js.
+- Memastikan jQuery sudah diunduh dan disimpan di folder `public/assets/js`.
 
 ### 2. Membuat Controller
 
-- Membuat AjaxController dengan method index, getData, store, dan update.
+- Membuat `AjaxController` dengan method `index`, `getData`, `store`, dan `update`.
 
-*Kode AjaxController.php:*
+**Kode AjaxController.php:**
 
-php
+```php
 <?php
 
 namespace App\Controllers;
@@ -603,18 +603,18 @@ class AjaxController extends Controller
         return $this->response->setJSON($data);
     }
 }
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-17.png)
 
 ### 3. Membuat View
 
-- Membuat view ajax/index.php yang menampilkan data artikel dalam tabel dan menggunakan AJAX untuk mengambil data.
+- Membuat view `ajax/index.php` yang menampilkan data artikel dalam tabel dan menggunakan AJAX untuk mengambil data.
 
-*Kode index.php:*
+**Kode index.php:**
 
-php
+```php
 <?= $this->include('template/header'); ?>
 
 <h1>Data Artikel</h1>
@@ -697,27 +697,27 @@ php
 </script>
 
 <?= $this->include('template/footer'); ?>
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-18.png)
 
 ### 4. Menambahkan Route
 
-- Menambahkan route untuk mengakses method di AjaxController.
+- Menambahkan route untuk mengakses method di `AjaxController`.
 
-*Kode Routes.php:*
+**Kode Routes.php:**
 
-php
+```php
 // Route untuk AjaxController
 $routes->get('/ajax', 'AjaxController::index');
 $routes->get('/ajax/getData', 'AjaxController::getData');
 $routes->get('/ajax/delete/(:num)', 'AjaxController::delete/$1');
 $routes->post('/ajax/store', 'AjaxController::store');
 $routes->post('/ajax/update/(:num)', 'AjaxController::update/$1');
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-19.png)
 
 ## Konsep yang Dipelajari
@@ -729,14 +729,14 @@ $routes->post('/ajax/update/(:num)', 'AjaxController::update/$1');
 
 ## Struktur File
 
-
+```
 app/
 ├── Controllers/
 │   └── AjaxController.php
 └── Views/
     └── ajax/
         └── index.php
-
+```
 
 # Praktikum 9: Implementasi AJAX Pagination dan Search
 
@@ -755,17 +755,17 @@ Praktikum ini bertujuan untuk mengimplementasikan AJAX pada fitur pagination dan
 ### 1. Persiapan
 
 - ✅ MySQL Server sudah berjalan
-- ✅ Database lab_ci4 sudah tersedia
-- ✅ Tabel artikel dan kategori sudah ada dan terisi data
+- ✅ Database `lab_ci4` sudah tersedia
+- ✅ Tabel `artikel` dan `kategori` sudah ada dan terisi data
 - ✅ Library jQuery sudah terpasang melalui CDN
 
 ### 2. Modifikasi Controller Artikel
 
-Mengubah method admin_index() di Artikel.php untuk mengembalikan data dalam format JSON jika request adalah AJAX.
+Mengubah method `admin_index()` di `Artikel.php` untuk mengembalikan data dalam format JSON jika request adalah AJAX.
 
-*Kode Controller yang dimodifikasi:*
+**Kode Controller yang dimodifikasi:**
 
-php
+```php
 // Halaman Admin - List Artikel dengan Pagination dan Pencarian
 public function admin_index()
 {
@@ -805,26 +805,26 @@ public function admin_index()
         return view('artikel/admin_index', $data);
     }
 }
+```
 
+**Penjelasan kode:**
 
-*Penjelasan kode:*
-
-- $page = $this->request->getVar('page') ?? 1;: Mendapatkan nomor halaman dari request
-- $builder->paginate(10, 'default', $page);: Menerapkan pagination dengan 10 item per halaman
-- $this->request->isAJAX(): Memeriksa apakah request yang datang adalah AJAX
+- `$page = $this->request->getVar('page') ?? 1;`: Mendapatkan nomor halaman dari request
+- `$builder->paginate(10, 'default', $page);`: Menerapkan pagination dengan 10 item per halaman
+- `$this->request->isAJAX()`: Memeriksa apakah request yang datang adalah AJAX
 - Jika AJAX, kembalikan data artikel dan pager dalam format JSON
 - Jika bukan AJAX, tampilkan view seperti biasa
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-20.png)
 
 ### 3. Modifikasi View (admin_index.php)
 
-Mengubah view admin_index.php untuk menggunakan jQuery AJAX. Menghapus kode yang menampilkan tabel artikel dan pagination secara langsung, kemudian menambahkan elemen container untuk menampilkan data dari AJAX.
+Mengubah view `admin_index.php` untuk menggunakan jQuery AJAX. Menghapus kode yang menampilkan tabel artikel dan pagination secara langsung, kemudian menambahkan elemen container untuk menampilkan data dari AJAX.
 
-*Kode View yang dimodifikasi:*
+**Kode View yang dimodifikasi:**
 
-php
+```php
 <?= $this->include('template/admin_header'); ?>
 <h2><?= $title; ?></h2>
 <div class="row mb-3">
@@ -845,11 +845,11 @@ php
 </div>
 <div id="pagination-container">
 </div>
+```
 
+**Implementasi jQuery AJAX:**
 
-*Implementasi jQuery AJAX:*
-
-javascript
+```javascript
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
@@ -946,25 +946,25 @@ $(document).ready(function() {
 });
 </script>
 <?= $this->include('template/admin_footer'); ?>
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-21.png)
 
 ### 4. Testing dan Verifikasi
 
 Untuk memudahkan testing, dibuat route khusus tanpa authentication:
 
-*Route Testing:*
+**Route Testing:**
 
-php
+```php
 // Test route untuk AJAX (tanpa auth untuk testing)
 $routes->get('test/artikel', 'Artikel::test_admin_index');
+```
 
+**Method Testing di Controller:**
 
-*Method Testing di Controller:*
-
-php
+```php
 public function test_admin_index()
 {
     // Same implementation as admin_index() but returns test view
@@ -978,12 +978,12 @@ public function test_admin_index()
         return view('artikel/test_admin_index', $data);
     }
 }
+```
 
-
-*Sample Data Seeder:*
+**Sample Data Seeder:**
 Dibuat seeder untuk menambahkan data sample artikel dan kategori:
 
-php
+```php
 class SampleDataSeeder extends Seeder
 {
     public function run()
@@ -1011,7 +1011,7 @@ class SampleDataSeeder extends Seeder
         $this->db->table('artikel')->insertBatch($artikelData);
     }
 }
-
+```
 
 ## Fitur yang Berhasil Diimplementasikan
 
@@ -1043,24 +1043,24 @@ class SampleDataSeeder extends Seeder
 
 ## URL Testing
 
-- *Halaman Test AJAX*: http://localhost:8080/test/artikel
-- *Halaman Admin (dengan auth)*: http://localhost:8080/admin/artikel
+- **Halaman Test AJAX**: `http://localhost:8080/test/artikel`
+- **Halaman Admin (dengan auth)**: `http://localhost:8080/admin/artikel`
 
 ## Kesimpulan
 
 Praktikum 9 berhasil mengimplementasikan AJAX untuk pagination dan search pada halaman admin artikel. Implementasi ini meningkatkan User Experience (UX) dengan:
 
-1. *Performa yang lebih baik*: Tidak perlu reload seluruh halaman
-2. *Interaksi yang lebih smooth*: Real-time search dan filter
-3. *Navigasi yang responsif*: Pagination tanpa loading ulang
-4. *Error handling yang baik*: Menampilkan pesan error yang informatif
+1. **Performa yang lebih baik**: Tidak perlu reload seluruh halaman
+2. **Interaksi yang lebih smooth**: Real-time search dan filter
+3. **Navigasi yang responsif**: Pagination tanpa loading ulang
+4. **Error handling yang baik**: Menampilkan pesan error yang informatif
 
 Teknologi yang digunakan:
 
-- *CodeIgniter 4*: Framework PHP untuk backend
-- *jQuery 3.6.0*: Library JavaScript untuk AJAX
-- *Bootstrap*: Framework CSS untuk styling
-- *MySQL*: Database untuk menyimpan data
+- **CodeIgniter 4**: Framework PHP untuk backend
+- **jQuery 3.6.0**: Library JavaScript untuk AJAX
+- **Bootstrap**: Framework CSS untuk styling
+- **MySQL**: Database untuk menyimpan data
 
 # Praktikum 10: REST API
 
@@ -1076,19 +1076,19 @@ Praktikum ini bertujuan untuk memahami konsep dasar API dan RESTful, serta mengi
 
 ## Apa itu REST API?
 
-*Representational State Transfer (REST)* adalah salah satu desain arsitektur Application Programming Interface (API). API sendiri merupakan interface yang menjadi perantara yang menghubungkan satu aplikasi dengan aplikasi lainnya.
+**Representational State Transfer (REST)** adalah salah satu desain arsitektur Application Programming Interface (API). API sendiri merupakan interface yang menjadi perantara yang menghubungkan satu aplikasi dengan aplikasi lainnya.
 
 REST API berisi aturan untuk membuat web service dengan membatasi hak akses client yang mengakses API. REST API bisa diakses atau dihubungkan dengan aplikasi lain, oleh sebab itu pembatasan dilakukan untuk melindungi database/resource yang ada di server.
 
 ### Cara Kerja REST API
 
-REST API menggunakan prinsip *REST Server* dan *REST Client*:
+REST API menggunakan prinsip **REST Server** dan **REST Client**:
 
-- *REST Server*: Bertindak sebagai penyedia data/resource
-- *REST Client*: Membuat HTTP request pada server dengan URI atau global ID
-- *Response*: Server memberikan response dengan mengirim kembali HTTP request yang diminta client
+- **REST Server**: Bertindak sebagai penyedia data/resource
+- **REST Client**: Membuat HTTP request pada server dengan URI atau global ID
+- **Response**: Server memberikan response dengan mengirim kembali HTTP request yang diminta client
 
-Data yang dikirim maupun diterima biasanya berformat *JSON*, sehingga REST API mudah diintegrasikan dengan berbagai platform dengan bahasa pemrograman atau framework yang berbeda.
+Data yang dikirim maupun diterima biasanya berformat **JSON**, sehingga REST API mudah diintegrasikan dengan berbagai platform dengan bahasa pemrograman atau framework yang berbeda.
 
 ## Langkah-langkah Praktikum
 
@@ -1103,9 +1103,9 @@ Data yang dikirim maupun diterima biasanya berformat *JSON*, sehingga REST API m
 
 Membuat file REST Controller yang berisi fungsi untuk menampilkan, menambah, mengubah dan menghapus data.
 
-**File: app/Controllers/Post.php**
+**File: `app/Controllers/Post.php`**
 
-php
+```php
 <?php
 
 namespace App\Controllers;
@@ -1197,39 +1197,39 @@ class Post extends ResourceController
         }
     }
 }
+```
 
+**Penjelasan Method:**
 
-*Penjelasan Method:*
+- `index()` – Menampilkan seluruh data pada database
+- `create()` – Menambahkan data baru ke database
+- `show()` – Menampilkan data spesifik dari database
+- `update()` – Mengubah data pada database
+- `delete()` – Menghapus data dari database
 
-- index() – Menampilkan seluruh data pada database
-- create() – Menambahkan data baru ke database
-- show() – Menampilkan data spesifik dari database
-- update() – Mengubah data pada database
-- delete() – Menghapus data dari database
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-23.png)
 
 ### 3. Membuat Routing REST API
 
 Untuk mengakses REST API CodeIgniter, perlu mendefinisikan route terlebih dahulu.
 
-**File: app/Config/Routes.php**
+**File: `app/Config/Routes.php`**
 
-php
+```php
 // REST API routes
 $routes->resource('post');
+```
 
+**Testing Route dengan Command:**
 
-*Testing Route dengan Command:*
-
-bash
+```bash
 php spark routes
+```
 
+**Hasil Route yang Terbentuk:**
 
-*Hasil Route yang Terbentuk:*
-
-
+```
 +--------+-------------------------------+------+--------------------------------------------+
 | Method | Route                         | Name | Handler                                    |
 +--------+-------------------------------+------+--------------------------------------------+
@@ -1242,7 +1242,7 @@ php spark routes
 | PUT    | post/(.*)                     | »    | \App\Controllers\Post::update/$1           |
 | DELETE | post/(.*)                     | »    | \App\Controllers\Post::delete/$1           |
 +--------+-------------------------------+------+--------------------------------------------+
-
+```
 
 Satu baris kode routes akan menghasilkan banyak endpoint untuk operasi CRUD.
 
@@ -1250,130 +1250,130 @@ Satu baris kode routes akan menghasilkan banyak endpoint untuk operasi CRUD.
 
 #### 4.1 Menampilkan Semua Data (GET)
 
-*Method:* GET
-*URL:* http://localhost:8080/post
-*Deskripsi:* Menampilkan semua data artikel dari database
+**Method:** GET
+**URL:** `http://localhost:8080/post`
+**Deskripsi:** Menampilkan semua data artikel dari database
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-24.png)
 
 #### 4.2 Menampilkan Data Spesifik (GET)
 
-*Method:* GET
-*URL:* http://localhost:8080/post/2
-*Deskripsi:* Menampilkan data artikel dengan ID tertentu
+**Method:** GET
+**URL:** `http://localhost:8080/post/2`
+**Deskripsi:** Menampilkan data artikel dengan ID tertentu
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-25.png)
 
 #### 4.3 Menambahkan Data (POST)
 
-*Method:* POST
-*URL:* http://localhost:8080/post
-*Body Type:* x-www-form-urlencoded
-*Parameters:*
+**Method:** POST
+**URL:** `http://localhost:8080/post`
+**Body Type:** x-www-form-urlencoded
+**Parameters:**
 
-- judul: Judul artikel baru
-- isi: Isi artikel baru
+- `judul`: Judul artikel baru
+- `isi`: Isi artikel baru
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-26.png)
 
 #### 4.4 Mengubah Data (PUT)
 
-*Method:* PUT
-*URL:* http://localhost:8080/post/2
-*Body Type:* x-www-form-urlencoded
-*Parameters:*
+**Method:** PUT
+**URL:** `http://localhost:8080/post/2`
+**Body Type:** x-www-form-urlencoded
+**Parameters:**
 
-- judul: Judul artikel yang baru
-- isi: Isi artikel yang baru
+- `judul`: Judul artikel yang baru
+- `isi`: Isi artikel yang baru
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-28.png)
 
 #### 4.5 Menghapus Data (DELETE)
 
-*Method:* DELETE
-*URL:* http://localhost:8080/post/7
-*Deskripsi:* Menghapus data artikel dengan ID tertentu
+**Method:** DELETE
+**URL:** `http://localhost:8080/post/7`
+**Deskripsi:** Menghapus data artikel dengan ID tertentu
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-27.png)
 
 ## Endpoint REST API yang Tersedia
 
 | Method | Endpoint     | Fungsi                       | Parameter  |
 | ------ | ------------ | ---------------------------- | ---------- |
-| GET    | /post      | Menampilkan semua artikel    | -          |
-| GET    | /post/{id} | Menampilkan artikel spesifik | id         |
-| POST   | /post      | Menambah artikel baru        | judul, isi |
-| PUT    | /post/{id} | Mengubah artikel             | judul, isi |
-| DELETE | /post/{id} | Menghapus artikel            | id         |
+| GET    | `/post`      | Menampilkan semua artikel    | -          |
+| GET    | `/post/{id}` | Menampilkan artikel spesifik | id         |
+| POST   | `/post`      | Menambah artikel baru        | judul, isi |
+| PUT    | `/post/{id}` | Mengubah artikel             | judul, isi |
+| DELETE | `/post/{id}` | Menghapus artikel            | id         |
 
 ## Fitur REST API yang Berhasil Diimplementasikan
 
 ### 1. CRUD Operations
 
-- ✅ *Create*: Menambah data artikel baru
-- ✅ *Read*: Menampilkan semua data dan data spesifik
-- ✅ *Update*: Mengubah data artikel yang sudah ada
-- ✅ *Delete*: Menghapus data artikel
+- ✅ **Create**: Menambah data artikel baru
+- ✅ **Read**: Menampilkan semua data dan data spesifik
+- ✅ **Update**: Mengubah data artikel yang sudah ada
+- ✅ **Delete**: Menghapus data artikel
 
 ### 2. HTTP Methods
 
-- ✅ *GET*: Untuk mengambil data
-- ✅ *POST*: Untuk menambah data baru
-- ✅ *PUT*: Untuk mengubah data
-- ✅ *DELETE*: Untuk menghapus data
+- ✅ **GET**: Untuk mengambil data
+- ✅ **POST**: Untuk menambah data baru
+- ✅ **PUT**: Untuk mengubah data
+- ✅ **DELETE**: Untuk menghapus data
 
 ### 3. Response Format
 
-- ✅ *JSON Format*: Semua response dalam format JSON
-- ✅ *Status Code*: HTTP status code yang sesuai (200, 201, 404)
-- ✅ *Error Handling*: Pesan error yang informatif
+- ✅ **JSON Format**: Semua response dalam format JSON
+- ✅ **Status Code**: HTTP status code yang sesuai (200, 201, 404)
+- ✅ **Error Handling**: Pesan error yang informatif
 
 ### 4. RESTful Principles
 
-- ✅ *Resource-based URLs*: Menggunakan /post sebagai resource
-- ✅ *HTTP Methods*: Menggunakan method HTTP yang sesuai
-- ✅ *Stateless*: Setiap request berdiri sendiri
-- ✅ *JSON Communication*: Format data JSON untuk request/response
+- ✅ **Resource-based URLs**: Menggunakan `/post` sebagai resource
+- ✅ **HTTP Methods**: Menggunakan method HTTP yang sesuai
+- ✅ **Stateless**: Setiap request berdiri sendiri
+- ✅ **JSON Communication**: Format data JSON untuk request/response
 
 ## Kesimpulan
 
 Praktikum 10 berhasil mengimplementasikan REST API menggunakan CodeIgniter 4 dengan fitur lengkap CRUD operations. Implementasi ini memungkinkan:
 
-1. *Integrasi Mudah*: API dapat diakses dari berbagai platform dan bahasa pemrograman
-2. *Standar RESTful*: Mengikuti prinsip-prinsip REST API yang standar
-3. *Format JSON*: Data exchange menggunakan format JSON yang universal
-4. *Error Handling*: Penanganan error yang baik dengan status code yang sesuai
-5. *Scalable*: Mudah dikembangkan untuk menambah endpoint baru
+1. **Integrasi Mudah**: API dapat diakses dari berbagai platform dan bahasa pemrograman
+2. **Standar RESTful**: Mengikuti prinsip-prinsip REST API yang standar
+3. **Format JSON**: Data exchange menggunakan format JSON yang universal
+4. **Error Handling**: Penanganan error yang baik dengan status code yang sesuai
+5. **Scalable**: Mudah dikembangkan untuk menambah endpoint baru
 
-*Teknologi yang digunakan:*
+**Teknologi yang digunakan:**
 
-- *CodeIgniter 4*: Framework PHP untuk backend API
-- *ResourceController*: Base controller untuk REST API
-- *ResponseTrait*: Trait untuk response handling
-- *ArtikelModel*: Model untuk database operations
-- *Postman*: Tool untuk testing REST API
+- **CodeIgniter 4**: Framework PHP untuk backend API
+- **ResourceController**: Base controller untuk REST API
+- **ResponseTrait**: Trait untuk response handling
+- **ArtikelModel**: Model untuk database operations
+- **Postman**: Tool untuk testing REST API
 
-*Screenshot Testing Lengkap:*
+**Screenshot Testing Lengkap:**
 ![alt text](Gambar/image-32.png)
 
 ## Perbaikan dan Optimasi
 
 ### 1. Fix PUT Method Error 500
 
-*Masalah:* Konflik parameter $id di method update()
-*Solusi:* Menghapus $id = $this->request->getVar('id'); karena ID sudah diambil dari URL parameter
+**Masalah:** Konflik parameter `$id` di method `update()`
+**Solusi:** Menghapus `$id = $this->request->getVar('id');` karena ID sudah diambil dari URL parameter
 
 ### 2. Fix Artikel Detail Redirect
 
-*Masalah:* Artikel yang ditambah via API tidak bisa dibuka detail karena tidak ada slug
-*Solusi:* Menambahkan auto-generate slug dan tanggal di method create() dan update()
+**Masalah:** Artikel yang ditambah via API tidak bisa dibuka detail karena tidak ada slug
+**Solusi:** Menambahkan auto-generate slug dan tanggal di method `create()` dan `update()`
 
-php
+```php
 // Perbaikan di method create() dan update()
 $judul = $this->request->getVar('judul');
 $data = [
@@ -1382,14 +1382,14 @@ $data = [
     'slug' => url_title($judul, '-', true),  // Auto-generate slug
     'tanggal' => date('Y-m-d H:i:s')         // Auto-generate timestamp
 ];
-
+```
 
 ### 3. Cara Testing PUT yang Benar
 
-- *Method:* PUT
-- *URL:* http://localhost:8080/post/2
-- *Body:* x-www-form-urlencoded
-- *Parameters:* Hanya judul dan isi (ID diambil dari URL)
+- **Method:** PUT
+- **URL:** `http://localhost:8080/post/2`
+- **Body:** x-www-form-urlencoded
+- **Parameters:** Hanya `judul` dan `isi` (ID diambil dari URL)
 
 Sekarang semua endpoint REST API sudah berfungsi dengan baik! 🚀
 
@@ -1419,16 +1419,16 @@ Adapun library VueJS berfokus pada view layer sehingga framework ini mudah untuk
 
 Untuk memulai penggunaan framework VueJS, dapat dilakukan dengan menggunakan npm, atau bisa juga dengan cara manual. Untuk praktikum kali ini kita akan gunakan cara manual menggunakan CDN.
 
-*Library yang diperlukan:*
+**Library yang diperlukan:**
 
-- *VueJS 3*: <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-- *Axios*: <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+- **VueJS 3**: `<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>`
+- **Axios**: `<script src="https://unpkg.com/axios/dist/axios.min.js"></script>`
 
 ### 2. Struktur Direktori
 
 Membuat project baru dengan struktur file dan directory sebagai berikut:
 
-
+```
 lab8_vuejs/
 │   index.html
 └───assets/
@@ -1436,15 +1436,15 @@ lab8_vuejs/
     │   style.css
     └───js/
         app.js
+```
 
-
-*Screenshot:*
+**Screenshot:**
 
 ### 3. Membuat File HTML Dasar
 
-**File: index.html**
+**File: `index.html`**
 
-html
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -1507,16 +1507,16 @@ html
     <script src="assets/js/app.js"></script>
   </body>
 </html>
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-29.png)
 
 ### 4. Membuat File JavaScript (app.js)
 
-**File: assets/js/app.js**
+**File: `assets/js/app.js`**
 
-javascript
+```javascript
 const { createApp } = Vue;
 
 // tentukan lokasi API REST End Point
@@ -1617,16 +1617,16 @@ createApp({
     },
   },
 }).mount('#app');
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-30.png)
 
 ### 5. Membuat File CSS (style.css)
 
-**File: assets/css/style.css**
+**File: `assets/css/style.css`**
 
-css
+```css
 #app {
   margin: 0 auto;
   width: 900px;
@@ -1742,9 +1742,9 @@ form button {
   font-weight: bold;
   cursor: pointer;
 }
+```
 
-
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-31.png)
 
 ### 6. Testing Aplikasi VueJS
@@ -1753,9 +1753,9 @@ form button {
 
 Aplikasi akan secara otomatis memuat data artikel dari REST API saat halaman dibuka.
 
-*URL Testing:* http://localhost/Lab11Web-master/lab8_vuejs/index.html
+**URL Testing:** `http://localhost/Lab11Web-master/lab8_vuejs/index.html`
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-32.png)
 
 #### 6.2 Menambah Data Artikel
@@ -1764,7 +1764,7 @@ Aplikasi akan secara otomatis memuat data artikel dari REST API saat halaman dib
 2. Isi form dengan data artikel baru
 3. Klik "Simpan"
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-33.png)
 
 #### 6.3 Mengedit Data Artikel
@@ -1774,7 +1774,7 @@ Aplikasi akan secara otomatis memuat data artikel dari REST API saat halaman dib
 3. Ubah data sesuai kebutuhan
 4. Klik "Simpan"
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-34.png)
 
 #### 6.4 Menghapus Data Artikel
@@ -1783,59 +1783,59 @@ Aplikasi akan secara otomatis memuat data artikel dari REST API saat halaman dib
 2. Konfirmasi penghapusan
 3. Data akan terhapus dari tabel
 
-*Screenshot:*
+**Screenshot:**
 ![alt text](Gambar/image-35.png)
 
 ## Fitur yang Berhasil Diimplementasikan
 
 ### 1. CRUD Operations dengan VueJS
 
-- ✅ *Create*: Menambah artikel baru melalui form modal
-- ✅ *Read*: Menampilkan daftar artikel dari REST API
-- ✅ *Update*: Mengedit artikel yang sudah ada
-- ✅ *Delete*: Menghapus artikel dengan konfirmasi
+- ✅ **Create**: Menambah artikel baru melalui form modal
+- ✅ **Read**: Menampilkan daftar artikel dari REST API
+- ✅ **Update**: Mengedit artikel yang sudah ada
+- ✅ **Delete**: Menghapus artikel dengan konfirmasi
 
 ### 2. Reactive Data Binding
 
-- ✅ *Two-way Data Binding*: Form input terhubung dengan data VueJS
-- ✅ *Dynamic Content*: Tabel artikel diperbarui secara otomatis
-- ✅ *Conditional Rendering*: Modal form muncul/hilang berdasarkan kondisi
+- ✅ **Two-way Data Binding**: Form input terhubung dengan data VueJS
+- ✅ **Dynamic Content**: Tabel artikel diperbarui secara otomatis
+- ✅ **Conditional Rendering**: Modal form muncul/hilang berdasarkan kondisi
 
 ### 3. Event Handling
 
-- ✅ *Click Events*: Tombol tambah, edit, hapus, dan simpan
-- ✅ *Form Submission*: Prevent default dan custom handling
-- ✅ *Modal Control*: Buka/tutup modal form
+- ✅ **Click Events**: Tombol tambah, edit, hapus, dan simpan
+- ✅ **Form Submission**: Prevent default dan custom handling
+- ✅ **Modal Control**: Buka/tutup modal form
 
 ### 4. API Integration
 
-- ✅ *Axios HTTP Client*: Untuk komunikasi dengan REST API
-- ✅ *GET Request*: Mengambil data artikel
-- ✅ *POST Request*: Menambah artikel baru
-- ✅ *PUT Request*: Mengubah artikel yang ada
-- ✅ *DELETE Request*: Menghapus artikel
+- ✅ **Axios HTTP Client**: Untuk komunikasi dengan REST API
+- ✅ **GET Request**: Mengambil data artikel
+- ✅ **POST Request**: Menambah artikel baru
+- ✅ **PUT Request**: Mengubah artikel yang ada
+- ✅ **DELETE Request**: Menghapus artikel
 
 ### 5. User Interface
 
-- ✅ *Responsive Design*: Tampilan yang menarik dan user-friendly
-- ✅ *Modal Dialog*: Form input dalam modal popup
-- ✅ *Status Display*: Menampilkan status artikel (Draft/Publish)
-- ✅ *Loading States*: Handling loading dan error states
+- ✅ **Responsive Design**: Tampilan yang menarik dan user-friendly
+- ✅ **Modal Dialog**: Form input dalam modal popup
+- ✅ **Status Display**: Menampilkan status artikel (Draft/Publish)
+- ✅ **Loading States**: Handling loading dan error states
 
 ## Konsep VueJS yang Dipelajari
 
 ### 1. Vue Instance dan Mounting
 
-javascript
+```javascript
 const { createApp } = Vue;
 createApp({
   // Vue instance configuration
 }).mount('#app');
-
+```
 
 ### 2. Data Properties
 
-javascript
+```javascript
 data() {
     return {
         artikel: '',
@@ -1843,37 +1843,37 @@ data() {
         showForm: false
     }
 }
-
+```
 
 ### 3. Methods
 
-javascript
+```javascript
 methods: {
     loadData() { /* method implementation */ },
     tambah() { /* method implementation */ },
     // ... other methods
 }
-
+```
 
 ### 4. Lifecycle Hooks
 
-javascript
+```javascript
 mounted() {
     this.loadData() // Called when component is mounted
 }
-
+```
 
 ### 5. Template Directives
 
-- v-for: Looping data dalam template
-- v-if: Conditional rendering
-- v-model: Two-way data binding
-- @click: Event handling
-- @submit.prevent: Form submission handling
+- `v-for`: Looping data dalam template
+- `v-if`: Conditional rendering
+- `v-model`: Two-way data binding
+- `@click`: Event handling
+- `@submit.prevent`: Form submission handling
 
 ## Struktur File Akhir
 
-
+```
 lab8_vuejs/
 │   index.html                 # Main HTML file
 └───assets/
@@ -1881,7 +1881,7 @@ lab8_vuejs/
     │   └───style.css         # Styling untuk aplikasi
     └───js/
         └───app.js            # VueJS application logic
-
+```
 
 ## Improvisasi dan Pengembangan Lanjutan
 
@@ -1889,12 +1889,12 @@ lab8_vuejs/
 
 #### 1.1 Desain Modern dan Responsive
 
-- *Bootstrap Integration*: Menambahkan Bootstrap 5 untuk tampilan yang lebih modern dan responsive
-- *Card Layout*: Mengubah tampilan tabel menjadi card layout yang lebih menarik
-- *Color Scheme*: Implementasi color scheme yang konsisten dan eye-catching
-- *Icons*: Menambahkan Font Awesome icons untuk tombol dan aksi
+- **Bootstrap Integration**: Menambahkan Bootstrap 5 untuk tampilan yang lebih modern dan responsive
+- **Card Layout**: Mengubah tampilan tabel menjadi card layout yang lebih menarik
+- **Color Scheme**: Implementasi color scheme yang konsisten dan eye-catching
+- **Icons**: Menambahkan Font Awesome icons untuk tombol dan aksi
 
-*Screenshot Improvisasi UI:*
+**Screenshot Improvisasi UI:**
 ![alt text](Gambar/2/image.png)
 
 ### 2. Halaman Home untuk Artikel Berita
@@ -1903,14 +1903,14 @@ lab8_vuejs/
 
 Membuat halaman home yang menarik untuk menampilkan artikel berita dengan fitur:
 
-- *Hero Section*: Banner utama dengan artikel featured
-- *Article Grid*: Layout grid untuk menampilkan artikel terbaru
-- *Category Filter*: Filter artikel berdasarkan kategori
-- *Search Bar*: Pencarian artikel di halaman depan
+- **Hero Section**: Banner utama dengan artikel featured
+- **Article Grid**: Layout grid untuk menampilkan artikel terbaru
+- **Category Filter**: Filter artikel berdasarkan kategori
+- **Search Bar**: Pencarian artikel di halaman depan
 
-**File: home.html**
+**File: `home.html`**
 
-html
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -2043,9 +2043,9 @@ html
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
+```
 
-
-*Screenshot Halaman Home:*
+**Screenshot Halaman Home:**
 ![alt text](Gambar/2/image-1.png)
 ![alt text](Gambar/2/image-2.png)
 ![alt text](Gambar/2/image-3.png)
@@ -2053,7 +2053,7 @@ html
 
 #### 2.2 JavaScript untuk Halaman Home
 
-**File: assets/js/home-app.js**
+**File: `assets/js/home-app.js`**
 
 ```javascript
 const { createApp } = Vue;
@@ -2123,4 +2123,257 @@ createApp({
       this.selectedArticle = article;
       this.showModal = true;
       // Show Bootstrap modal
-      const modal = new bootstrap.Modal(document.getElementById('art
+      const modal = new bootstrap.Modal(document.getElementById('articleModal'));
+      modal.show();
+    },
+    closeModal() {
+      this.selectedArticle = null;
+      this.showModal = false;
+    },
+    changePage(page) {
+      if (page >= 1 && page <= this.totalPages) {
+        this.currentPage = page;
+      }
+    },
+    truncateText(text, length) {
+      if (!text) return '';
+      return text.length > length ? text.substring(0, length) + '...' : text;
+    },
+    statusText(status) {
+      return status == 1 ? 'Published' : 'Draft';
+    },
+    formatDate(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('id-ID');
+    },
+  },
+}).mount('#app');
+```
+
+#### 2.3 CSS untuk Halaman Home
+
+**File: `assets/css/home-style.css`**
+
+```css
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.article-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 15px;
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.article-content {
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.pagination .page-link {
+  border-radius: 50px;
+  margin: 0 2px;
+  border: none;
+  color: #667eea;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 25px;
+  padding: 8px 20px;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(45deg, #5a6fd8, #6a4190);
+  transform: translateY(-1px);
+}
+
+.badge {
+  border-radius: 15px;
+  padding: 5px 10px;
+}
+
+.form-control,
+.form-select {
+  border-radius: 25px;
+  border: 2px solid #e9ecef;
+  padding: 10px 15px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 400px;
+    text-align: center;
+  }
+
+  .display-4 {
+    font-size: 2rem;
+  }
+}
+```
+
+Aplikasi ini mendemonstrasikan implementasi lengkap dari konsep **separation of concerns** dimana frontend dan backend terpisah namun dapat berkomunikasi melalui REST API, memungkinkan pengembangan yang lebih modular dan scalable. 🚀
+
+---
+
+# 🎯 Kesimpulan Keseluruhan Praktikum 7-11
+
+Serangkaian praktikum dari **Praktikum 7 hingga Praktikum 11** telah berhasil mengimplementasikan aplikasi web lengkap dengan teknologi modern. Berikut adalah ringkasan pencapaian dari setiap praktikum:
+
+## 📋 Ringkasan Praktikum
+
+### **Praktikum 7: Relasi Tabel dan Query Builder**
+
+- ✅ Implementasi relasi One-to-Many antara tabel kategori dan artikel
+- ✅ Penggunaan Query Builder untuk join tabel
+- ✅ CRUD operations dengan relasi database
+- ✅ Filter dan pencarian berdasarkan kategori
+
+### **Praktikum 8: AJAX**
+
+- ✅ Implementasi AJAX untuk operasi tanpa reload halaman
+- ✅ Dynamic content loading menggunakan JavaScript
+- ✅ Improved user experience dengan asynchronous operations
+- ✅ Real-time data manipulation
+
+### **Praktikum 9: Implementasi AJAX Pagination dan Search**
+
+- ✅ AJAX pagination untuk navigasi data yang efisien
+- ✅ Real-time search functionality
+- ✅ Filter berdasarkan kategori dengan AJAX
+- ✅ Enhanced admin interface dengan smooth interactions
+
+### **Praktikum 10: REST API**
+
+- ✅ Implementasi REST API endpoints (GET, POST, PUT, DELETE)
+- ✅ JSON response format untuk komunikasi API
+- ✅ API testing menggunakan Postman
+- ✅ Backend service untuk frontend consumption
+
+### **Praktikum 11: VueJS - Frontend API**
+
+- ✅ Frontend application menggunakan VueJS 3
+- ✅ Konsumsi REST API dengan Axios
+- ✅ Reactive data binding dan component-based architecture
+- ✅ Modern UI/UX dengan Bootstrap dan improvisasi design
+
+## 🚀 Teknologi yang Dikuasai
+
+| **Backend**   | **Frontend**      | **Database**        | **Tools** |
+| ------------- | ----------------- | ------------------- | --------- |
+| CodeIgniter 4 | VueJS 3           | MySQL               | Postman   |
+| REST API      | Bootstrap 5       | Query Builder       | Git       |
+| AJAX          | JavaScript ES6+   | Database Relations  | VS Code   |
+| PHP 8+        | Axios HTTP Client | Migration & Seeding | XAMPP     |
+
+## 🎨 Fitur Unggulan yang Diimplementasikan
+
+### **Backend Features:**
+
+- 🔐 **Database Relations**: One-to-Many relationship implementation
+- 🔄 **REST API**: Complete CRUD operations via API endpoints
+- 🔍 **Advanced Search**: Multi-criteria search and filtering
+- 📄 **Pagination**: Efficient data pagination with AJAX
+- 📊 **Query Optimization**: Optimized database queries with joins
+
+### **Frontend Features:**
+
+- ⚡ **Reactive UI**: Real-time data updates without page reload
+- 📱 **Responsive Design**: Mobile-first approach with Bootstrap
+- 🎯 **User Experience**: Smooth animations dan transitions
+- 🔍 **Live Search**: Instant search results as you type
+- 📋 **Modal Forms**: Clean dan intuitive form interfaces
+- 🎨 **Modern Design**: Professional UI dengan consistent styling
+
+## 📈 Pembelajaran dan Pencapaian
+
+### **Technical Skills:**
+
+1. **Full-Stack Development**: Kemampuan mengembangkan aplikasi end-to-end
+2. **API Development**: Membangun dan mengkonsumsi REST API
+3. **Modern JavaScript**: Penggunaan VueJS dan ES6+ features
+4. **Database Design**: Implementasi relasi dan optimasi query
+5. **Responsive Design**: Membuat aplikasi yang mobile-friendly
+
+### **Soft Skills:**
+
+1. **Problem Solving**: Mengatasi berbagai tantangan teknis
+2. **Documentation**: Membuat dokumentasi yang comprehensive
+3. **Code Organization**: Struktur kode yang clean dan maintainable
+4. **Testing**: Testing API endpoints dan functionality
+5. **Deployment**: Persiapan aplikasi untuk production
+
+## 🌟 Improvisasi dan Inovasi
+
+Selama pengerjaan praktikum, telah dilakukan berbagai improvisasi untuk meningkatkan kualitas aplikasi:
+
+- **Enhanced UI/UX**: Desain yang lebih modern dan user-friendly
+- **Performance Optimization**: Loading yang lebih cepat dan efficient
+- **Additional Features**: Fitur tambahan yang meningkatkan functionality
+- **Code Quality**: Clean code practices dan best practices implementation
+- **Responsive Design**: Tampilan optimal di berbagai device
+
+## 🎯 Hasil Akhir
+
+Aplikasi web yang dihasilkan merupakan **sistem manajemen artikel** yang lengkap dengan fitur:
+
+- ✅ **Admin Panel**: Untuk mengelola artikel dan kategori
+- ✅ **Public Interface**: Halaman publik untuk membaca artikel
+- ✅ **REST API**: Backend service yang dapat digunakan berbagai client
+- ✅ **Modern Frontend**: Interface yang responsive dan interaktif
+
+## 🌐 Deployment dan Hosting
+
+Aplikasi telah berhasil di-deploy ke hosting dan dapat diakses melalui:
+
+- **🔗 Web Artikel CI4**: [https://alvinmedia.my.id/](https://alvinmedia.my.id/)
+- **🔗 VueJS Frontend**: [https://alvinmedia.my.id/vue/](https://alvinmedia.my.id/vue/)
+
+---
+
+**Praktikum 7-11** telah berhasil memberikan pemahaman mendalam tentang pengembangan aplikasi web modern dengan teknologi terkini. Kombinasi antara **CodeIgniter 4** sebagai backend dan **VueJS 3** sebagai frontend menghasilkan aplikasi yang powerful, scalable, dan user-friendly.
+
+> **"Dari database relational hingga modern frontend framework, perjalanan praktikum ini telah membekali saya dengan skill full-stack development yang komprehensif."** 🚀
