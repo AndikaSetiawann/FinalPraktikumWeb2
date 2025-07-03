@@ -1,0 +1,31 @@
+<svg width="220" height="55" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="premiumGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1e3c72;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a5298;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="220" height="55" rx="15" ry="15" fill="url(#premiumGradient2)" />
+
+  <!-- Modern document stack icon -->
+  <g transform="translate(18, 15)">
+    <!-- Back papers -->
+    <rect x="3" y="3" width="18" height="22" rx="2" fill="rgba(255,255,255,0.2)"/>
+    <rect x="2" y="2" width="18" height="22" rx="2" fill="rgba(255,255,255,0.4)"/>
+    <!-- Front paper -->
+    <rect x="0" y="0" width="18" height="22" rx="2" fill="white"/>
+
+    <!-- Content -->
+    <rect x="2" y="3" width="14" height="2.5" rx="1" fill="#1e3c72"/>
+    <rect x="2" y="7" width="10" height="1.2" fill="#666"/>
+    <rect x="2" y="9.5" width="12" height="1.2" fill="#666"/>
+    <rect x="2" y="12" width="8" height="1.2" fill="#666"/>
+    <rect x="2" y="14.5" width="11" height="1.2" fill="#666"/>
+  </g>
+
+  <!-- Logo text -->
+  <text x="130" y="35" font-family="Arial, sans-serif" font-size="17" font-weight="600"
+        text-anchor="middle" fill="white" letter-spacing="2px">MEDIA PORTAL</text>
+</svg>

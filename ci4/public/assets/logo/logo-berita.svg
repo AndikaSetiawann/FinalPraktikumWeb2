@@ -1,0 +1,25 @@
+<svg width="200" height="50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="beritaGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1f5faa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2b83ea;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background rounded rectangle -->
+  <rect x="0" y="0" width="200" height="50" rx="8" ry="8" fill="url(#beritaGradient)" />
+  
+  <!-- Globe/World icon for news -->
+  <g fill="white" transform="translate(15, 15)">
+    <!-- Globe circle -->
+    <circle cx="10" cy="10" r="9" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Continents -->
+    <path d="M5 8 Q8 6 12 8 Q15 10 12 12 Q8 14 5 12 Z" fill="white"/>
+    <path d="M6 15 Q10 13 14 15" fill="none" stroke="white" stroke-width="1.5"/>
+    <path d="M6 5 Q10 7 14 5" fill="none" stroke="white" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Logo text -->
+  <text x="115" y="32" font-family="Arial, sans-serif" font-size="15" font-weight="bold" 
+        text-anchor="middle" fill="white">BERITA TERKINI</text>
+</svg>
